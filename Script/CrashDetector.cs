@@ -6,10 +6,13 @@ public class CrashDetector : MonoBehaviour
 {
     [SerializeField] 
     float loadDelay = 2.5f;
+    [SerializeField]
+    ParticleSystem CrashEffect;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Ground"))
         {
+            CrashEffect.Play();
             Invoke("ReloadScene", loadDelay);
             Debug.Log("done");
         }
