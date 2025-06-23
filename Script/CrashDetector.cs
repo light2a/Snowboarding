@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class CrashDetector : MonoBehaviour
 {
-    [SerializeField] AudioClip crashSFX;
     [SerializeField] 
     float loadDelay = 2.5f;
     [SerializeField]
@@ -17,7 +16,6 @@ public class CrashDetector : MonoBehaviour
         if (other.CompareTag("Ground"))
         {
             CrashEffect.Play();
-            GetComponent<AudioSource>().PlayOneShot(crashSFX); 
             GameOver();
             Invoke("ReloadScene", loadDelay);
             Debug.Log("done");

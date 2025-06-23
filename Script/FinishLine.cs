@@ -16,7 +16,6 @@ public class FinishLine : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             finishEffect.Play();
-            GetComponent<AudioSource>().Play();
             GameWin();
         }
     }
