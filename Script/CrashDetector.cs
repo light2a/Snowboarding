@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,15 +11,32 @@ public class CrashDetector : MonoBehaviour
     ParticleSystem CrashEffect;
     [SerializeField]
     GameObject gameOverScreen;
+    [SerializeField]
+    private TextMeshProUGUI scoreText;
+
+    public int score = 0;
     bool gameOver = false;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Ground"))
+        Debug.Log(other.gameObject.tag.ToString());
+        if (other.CompareTag("Ground") && other is CircleCollider2D)
         {
             CrashEffect.Play();
             GameOver();
             Invoke("ReloadScene", loadDelay);
             Debug.Log("done");
+        }
+        if (other.CompareTag("Object") && other is BoxCollider2D)
+        {
+            CrashEffect.Play();
+            GameOver();
+            Invoke("ReloadScene", loadDelay);
+            Debug.Log("done");
+        }if (other.gameObject.tag.ToString().Equals("CoinNumber") )
+        {
+            Destroy(other.gameObject);
+            AddScore();
+            UpdateScore();
         }
     }
     public void ReloadScene()
@@ -36,6 +54,7 @@ public class CrashDetector : MonoBehaviour
     void Start()
     {
         gameOverScreen.SetActive(false);
+        UpdateScore();
     }
 
     // Update is called once per frame
@@ -49,5 +68,16 @@ public class CrashDetector : MonoBehaviour
         Time.timeScale = 0;
         gameOver = true;
         gameOverScreen.SetActive(true);
+    }
+
+    public void AddScore()
+    {
+        Debug.Log("AddScore");
+        score++;
+    }
+
+    public void UpdateScore()
+    {
+        scoreText.text ="Score: "+ score;
     }
 }
