@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour
         {
             rb2d.AddTorque(-torqueAmout);
         }
-        else if (Input.GetKey(KeyCode.UpArrow) && isGrounded)
+        else if (Input.GetKey(KeyCode.UpArrow) && isGrounded && SceneManager.GetActiveScene().name == "Level2")
         {
             rb2d.linearVelocity = new Vector2(35, 15);
         }

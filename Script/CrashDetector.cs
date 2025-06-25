@@ -16,22 +16,24 @@ public class CrashDetector : MonoBehaviour
 
     public int score = 0;
     bool gameOver = false;
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.gameObject.tag.ToString());
-        if (other.CompareTag("Ground") && other is CircleCollider2D)
+
+        if (other.CompareTag("Ground"))
         {
+            GetComponent<AudioSource>().Play();
+
             CrashEffect.Play();
             GameOver();
-            Invoke("ReloadScene", loadDelay);
             Debug.Log("done");
         }
-        if (other.CompareTag("Object") && other is BoxCollider2D)
+        if (other.CompareTag("Object"))
         {
-            CrashEffect.Play();
-            GameOver();
-            Invoke("ReloadScene", loadDelay);
-            Debug.Log("done");
+            GetComponent<AudioSource>().Play();
+            Destroy(other.gameObject);
+            DeleteScore();
+            UpdateScore();
         }if (other.gameObject.tag.ToString().Equals("CoinNumber") )
         {
             Destroy(other.gameObject);
@@ -65,6 +67,9 @@ public class CrashDetector : MonoBehaviour
 
     void GameOver()
     {
+        var main = CrashEffect.main;
+        main.useUnscaledTime = true;
+        CrashEffect.Play();
         Time.timeScale = 0;
         gameOver = true;
         gameOverScreen.SetActive(true);
@@ -74,6 +79,10 @@ public class CrashDetector : MonoBehaviour
     {
         Debug.Log("AddScore");
         score++;
+    }
+    public void DeleteScore()
+    {
+        score=0;
     }
 
     public void UpdateScore()
