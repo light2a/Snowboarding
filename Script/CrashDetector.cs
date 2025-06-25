@@ -46,6 +46,11 @@ public class CrashDetector : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("Level1");
     }
+    public void ReloadScene2()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Level2");
+    }
     public void MainMenu()
     {
         Time.timeScale = 1;
